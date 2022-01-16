@@ -1,13 +1,13 @@
 {
   "name": "lab2.1-cat-me-jokes",
   "version": "1.0.0",
-  "description": "",
+  "description": "### Introduction to nodejs, npm, express",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Sarah Pettigrew",
   "license": "ISC",
   "dependencies": {
     "cat-me": "^1.0.3",
@@ -23,5 +23,13 @@
     "@babel/node": "^7.16.8",
     "@babel/preset-env": "^7.16.8",
     "nodemon": "^2.0.15"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sarahpettigrew/Lab2.1-cat-me-jokes.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sarahpettigrew/Lab2.1-cat-me-jokes/issues"
+  },
+  "homepage": "https://github.com/sarahpettigrew/Lab2.1-cat-me-jokes#readme"
 }
