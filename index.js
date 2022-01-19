@@ -1,4 +1,4 @@
-// YOUR NAME HERE AND MAYBE DATE AND VERSION!!!!
+// Sarah 1.0 1/15/2021
 
 const express = require('express')
 const app = express()
@@ -68,21 +68,21 @@ app.get('/:animal', function (req, res) {
 app.get('/:animal/:numberOfTimes', function (req, res) {
     let buildString = "";
 
-    // Add the params from the req object: syntax - req.params.animal
-    //                                     syntax - req.params.numberOfTimes
-    // let animal  = req.params.animal;
-    // let numberOfTimes = req.params.numberOfTimes 
-    // if or switch statement to consider possible values of animal:cat, dog, pig
-    // if ( what condition?    ) {
-    //     // for loop to iterate how many times the animal sound is repeated
-
-    //     for (i = 0; i < numberOfTimes ; i++) {
-    //         buildString += "MEOW "
-    //     }
-    //     res.send(buildString);
-    // } else {
-    //     res.send(`The ${animal} is not in our zoo`)
-    // }
+    let numberOfTimes = req.params.numberOfTimes
+    let animal = req.params.animal
+    if (req.params.animal == "dog") {
+        for(i=0; i < numberOfTimes; i++){
+            buildString += "WOOF "
+        }
+        res.send(buildString)
+    } else if (req.params.animal == 'pig'){
+        for(i=0; i < numberOfTimes; i++){
+            buildString += "OINK "
+        }
+        res.send(buildString)
+    }else {
+            res.send(`The animal \"${animal}\"is not in our zoo!!`)
+        }
 })
 
 app.listen(4444)
