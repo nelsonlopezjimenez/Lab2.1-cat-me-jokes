@@ -33,7 +33,7 @@ app.get('/', function (req, res) {
 })
 
 app.get('/cat', function (req, res) {
-    res.send("WOOF, WOOF!!")
+    res.send("Meow")
 })
 
 // Using Parameters in the URL argument
@@ -51,39 +51,63 @@ app.get('/cat/:numberOfTimes', function (req, res) {
 });
 
 // Route to pass a param with the req object
+app.get('/:animal', (req, res) => {
+    let animal = req.params.animal;
 
-app.get('/:animal', function (req, res) {
-    let buildString = "";
-    if (req.params.animal == "dog") {
-        buildString += "MEOW "
-        res.send(buildString);
-    } else {
-        res.send("The animal is not in our zoo!!")
+
+    if(animal == "cat")
+    {    
+        res.send('MEOW!! ');
     }
-})
+    else if (animal == "dog")
+    {
+        res.send('Woof! ');
+    }
+    else if (animal == "pig")
+    {
+        res.send('Oink! ');
+    }
+    else
+    {
+        res.send(`${animal} is not in our zoo!`);
+    }
+  })  
+  
 
-// * TODO week2 topic 1 PLEASE COMPLETE!!!!*
-// Route looks like /pig/20 : output 20 "OINK "
-
-app.get('/:animal/:numberOfTimes', function (req, res) {
+// lets user input animal and number of times to repeat sound. IF animal is not cat,dog, or pigs, it says that the animal is not in zoo
+  app.get('/:animal/:numberTimes', (req, res) => {
+    let animal = req.params.animal;
+    let numTimes = req.params.numberTimes;
+    let response = "";
     let buildString = "";
 
-    // Add the params from the req object: syntax - req.params.animal
-    //                                     syntax - req.params.numberOfTimes
-    // let animal  = req.params.animal;
-    // let numberOfTimes = req.params.numberOfTimes 
-    // if or switch statement to consider possible values of animal:cat, dog, pig
-    // if ( what condition?    ) {
-    //     // for loop to iterate how many times the animal sound is repeated
 
-    //     for (i = 0; i < numberOfTimes ; i++) {
-    //         buildString += "MEOW "
-    //     }
-    //     res.send(buildString);
-    // } else {
-    //     res.send(`The ${animal} is not in our zoo`)
-    // }
-})
+    if(animal == "cat")
+    {    
+        response ='MEOW!! ';
+    }
+    else if (animal == "dog")
+    {
+        response ='Woof! ';
+    }
+    else if (animal == "pig")
+    {
+        response ='Oink! ';
+    }
+    else
+    {
+        res.send(`${animal} is not in our zoo!`);
+    }
+
+    for(let i = 0; i < numTimes; i++)
+    {
+      buildString += response; 
+    }
+
+    res.send(buildString);
+  })  
+  
+
 
 app.listen(4444)
 
