@@ -1,7 +1,7 @@
 {
   "name": "lab2.1-cat-me-jokes",
   "version": "1.0.0",
-  "description": "",
+  "description": "1. cd into the Lab02-cat-me-jokes directory\r 1. run \"npm install\" command\r 1. Relax for a few minutes. Please watch videos located in canvas, week01-Representing-The-Web: \r     1. Intro to nodejs, npm, installing knock-knock-jokes (~10min)\r     1. Nodejs, npm, jokes and cat-me packages (~10min)\r     1. Express Server intro Hello World (~10min)\r     1. Express Server Adding routes: /cat, /dog, /dog/10 (~10min)\r 1. Open the folder using Visual Studio Code\r 1. Follow the instructions.\r 1. When you are ready, make a \"Pull Request\" to the original repo (mine)",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -23,5 +23,13 @@
     "@babel/node": "^7.16.8",
     "@babel/preset-env": "^7.16.8",
     "nodemon": "^2.0.15"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/josh671/Lab2.1-cat-me-jokes.git"
+  },
+  "bugs": {
+    "url": "https://github.com/josh671/Lab2.1-cat-me-jokes/issues"
+  },
+  "homepage": "https://github.com/josh671/Lab2.1-cat-me-jokes#readme"
 }
