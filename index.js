@@ -42,7 +42,7 @@ const getFace  = (animal) => zoo[animal][1];
 const getSound = (animal) => zoo[animal][0].toUpperCase(); 
 
 const getAnimalString = (animal, numberOfTimes) => 
-  zooAnimals.includes(animal) ? 
+  zooAnimals.includes(animal.toLowerCase()) ? 
     `${getFace(animal)} - ${`${getSound(animal)} `.repeat(numberOfTimes).trim()}!` :
     `The ${animal} isn't in the zoo!`;
 
@@ -62,8 +62,7 @@ app.get('/zoo', (req, res) => res.send(getAnimalChoices()));
 
 // Route for main functionality
 app.get('/:animal/:numberOfTimes', (req, res) => {
-  let animal        = req.params.animal.toLowerCase();
-  let numberOfTimes = req.params.numberOfTimes;
+  let { animal, numberOfTimes } = req.params;
   res.send(getAnimalString(animal, numberOfTimes));
 });
 
