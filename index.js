@@ -1,90 +1,74 @@
-// YOUR NAME HERE AND MAYBE DATE AND VERSION!!!!
+/*
+  John O'Hara
+  Lab 2.1 - Version 1.0.0
+  1/21/2022
 
-const express = require('express')
-const app = express()
-const mongoose = require('mongoose');
+  I gutted some of the unnecessary code to avoid any issues from modules that aren't
+  used in this assignment. I also renamed the existing package.json and package-lock.json 
+  files to the 'verdaccio-' versions of each and initialiazed a new project to 
+  avoid the errors npm was giving me without a local verdaccio repo set up.
+*/
+
+import express, { urlencoded } from 'express';
+
+const app = express();
 
 // Built-In Middleware
+app.use(urlencoded({ extended: true }));
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static('/public'));
-app.set('view engine', 'ejs');
+// Object to represent our animals as an array holding their sound and face
+const zoo = {
+  bear:   ["roar",    "🐻"],
+  bee:    ["buzz",    "🐝"],
+  bird:   ["tweet",   "🐦"],
+  cat:    ["meow",    "🐱"],
+  cow:    ["moo",     "🐮"],
+  dog:    ["woof",    "🐕"],
+  frog:   ["ribbit",  "🐸"],
+  horse:  ["neigh",   "🐴"],
+  mouse:  ["squeak",  "🐭"],
+  pig:    ["oink",    "🐷"],
+  sheep:  ["baaah",   "🐑"],
+};
 
-// Database Server MongoDb Setup
+const zooAnimals = Object.keys(zoo);
 
-mongoose.connect('mongodb://localhost/colt-wieruch-todo-list',
-    { useNewUrlParser: true });
-// Setup the Model
-const todoSchema = new mongoose.Schema({
-    title: String,
-    isChecked: { type: Boolean, default: false },
-    date: { type: Date, default: new Date() }
+
+//  ----------------
+//  Helper Functions
+//  ----------------
+const getFace  = (animal) => zoo[animal][1];
+
+const getSound = (animal) => zoo[animal][0].toUpperCase(); 
+
+const getAnimalString = (animal, numberOfTimes) => 
+  zooAnimals.includes(animal) ? 
+    `${getFace(animal)} - ${`${getSound(animal)} `.repeat(numberOfTimes).trim()}!` :
+    `The ${animal} isn't in the zoo!`;
+
+const getAnimalChoices = () => `Available animals are: ${zooAnimals.join(", ")}`;
+
+//  ------    
+//  Routes
+//  ------    
+
+// Route to print instructions
+app.get('/', (req, res) => 
+  res.send("Append an animal name, a forward slash, and a number to the URL! " +
+           "All animals can be viewed at /zoo."));
+
+// Route to display zoo choices
+app.get('/zoo', (req, res) => res.send(getAnimalChoices()));
+
+// Route for main functionality
+app.get('/:animal/:numberOfTimes', (req, res) => {
+  let animal        = req.params.animal.toLowerCase();
+  let numberOfTimes = req.params.numberOfTimes;
+  res.send(getAnimalString(animal, numberOfTimes));
 });
 
-const todoModel = mongoose.model("Todo", todoSchema);
+// fallback if number is omitted
+app.get('/:animal', (req, res) => 
+  res.send(getAnimalString(req.params.animal.toLowerCase(), 1)));
 
-// Custom Middleware
-
-// Routes
-
-app.get('/', function (req, res) {
-    res.send('Hello World')
-})
-
-app.get('/cat', function (req, res) {
-    res.send("WOOF, WOOF!!")
-})
-
-// Using Parameters in the URL argument
-
-// Route /cat/10 to show the animal sound 10 times
-
-app.get('/cat/:numberOfTimes', function (req, res) {
-    let buildString = "";
-    let numberOfTimes = req.params.numberOfTimes
-
-    for (i = 0; i < numberOfTimes; i++) {
-        buildString += "MEOW "
-    }
-    res.send(buildString);
-});
-
-// Route to pass a param with the req object
-
-app.get('/:animal', function (req, res) {
-    let buildString = "";
-    if (req.params.animal == "dog") {
-        buildString += "MEOW "
-        res.send(buildString);
-    } else {
-        res.send("The animal is not in our zoo!!")
-    }
-})
-
-// * TODO week2 topic 1 PLEASE COMPLETE!!!!*
-// Route looks like /pig/20 : output 20 "OINK "
-
-app.get('/:animal/:numberOfTimes', function (req, res) {
-    let buildString = "";
-
-    // Add the params from the req object: syntax - req.params.animal
-    //                                     syntax - req.params.numberOfTimes
-    // let animal  = req.params.animal;
-    // let numberOfTimes = req.params.numberOfTimes 
-    // if or switch statement to consider possible values of animal:cat, dog, pig
-    // if ( what condition?    ) {
-    //     // for loop to iterate how many times the animal sound is repeated
-
-    //     for (i = 0; i < numberOfTimes ; i++) {
-    //         buildString += "MEOW "
-    //     }
-    //     res.send(buildString);
-    // } else {
-    //     res.send(`The ${animal} is not in our zoo`)
-    // }
-})
-
-app.listen(4444)
-
-// Database Seeding
+app.listen(4444);
