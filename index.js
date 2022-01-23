@@ -13,7 +13,7 @@ app.set('view engine', 'ejs');
 
 // Database Server MongoDb Setup
 
-mongoose.connect('mongodb://localhost/colt-wieruch-todo-list',
+mongoose.connect('mongodb://localhost/lopez-nelson',
     { useNewUrlParser: true });
 // Setup the Model
 const todoSchema = new mongoose.Schema({
