@@ -83,7 +83,7 @@ app.get('/:animal', function (req, res) {
         buildString += "WOOF!"
         res.send(buildString);
     } else {
-        res.send("The animal is not in our zoo!!")
+        res.send("The " + req.params.animal + " is not in our zoo!!")
     }
 })
 
