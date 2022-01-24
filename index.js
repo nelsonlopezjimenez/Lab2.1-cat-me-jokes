@@ -95,6 +95,6 @@ app.get('/:animal/:numberOfTimes', function(req, res) {
     res.send(buildString);
 })
 
-app.listen(3000)
+app.listen(4444)
 
 // Database Seeding
