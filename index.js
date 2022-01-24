@@ -1,4 +1,4 @@
-// YOUR NAME HERE AND MAYBE DATE AND VERSION!!!!
+// jason beutler
 
 const express = require('express')
 const app = express()
@@ -32,33 +32,20 @@ app.get('/', function (req, res) {
     res.send('Hello World')
 })
 
-app.get('/cat', function (req, res) {
-    res.send("WOOF, WOOF!!")
-})
-
-// Using Parameters in the URL argument
-
-// Route /cat/10 to show the animal sound 10 times
-
-app.get('/cat/:numberOfTimes', function (req, res) {
-    let buildString = "";
-    let numberOfTimes = req.params.numberOfTimes
-
-    for (i = 0; i < numberOfTimes; i++) {
-        buildString += "MEOW "
-    }
-    res.send(buildString);
-});
-
-// Route to pass a param with the req object
 
 app.get('/:animal', function (req, res) {
     let buildString = "";
     if (req.params.animal == "dog") {
-        buildString += "MEOW "
+        buildString += "WOOF"
         res.send(buildString);
-    } else {
-        res.send("The animal is not in our zoo!!")
+    } else if (req.params.animal == "cat") {
+        buildString += "MEOW"
+        res.send(buildString);
+    } else if (req.params.animal == "pig") {
+        buildString += "OINK"
+        res.send(buildString);
+    }else {
+        res.send(req.params.animal + " is not in our zoo!!")
     }
 })
 
@@ -67,22 +54,26 @@ app.get('/:animal', function (req, res) {
 
 app.get('/:animal/:numberOfTimes', function (req, res) {
     let buildString = "";
-
-    // Add the params from the req object: syntax - req.params.animal
-    //                                     syntax - req.params.numberOfTimes
-    // let animal  = req.params.animal;
-    // let numberOfTimes = req.params.numberOfTimes 
-    // if or switch statement to consider possible values of animal:cat, dog, pig
-    // if ( what condition?    ) {
-    //     // for loop to iterate how many times the animal sound is repeated
-
-    //     for (i = 0; i < numberOfTimes ; i++) {
-    //         buildString += "MEOW "
-    //     }
-    //     res.send(buildString);
-    // } else {
-    //     res.send(`The ${animal} is not in our zoo`)
-    // }
+    let animal  = req.params.animal;
+    let numberOfTimes = req.params.numberOfTimes 
+    if (req.params.animal == "dog") {
+        for (i = 0; i < numberOfTimes; i++) {
+            buildString += "WOOF "
+        }
+        res.send(buildString);
+    } else if (req.params.animal == "cat") {
+        for (i = 0; i < numberOfTimes; i++) {
+            buildString += "MEOW "
+        }
+        res.send(buildString);
+    } else if (req.params.animal == "pig") {
+        for (i = 0; i < numberOfTimes; i++) {
+            buildString += "OINK "
+        }
+        res.send(buildString);
+    }else {
+        res.send(animal + " is not in our zoo!!")
+    }
 })
 
 app.listen(4444)
