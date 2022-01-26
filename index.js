@@ -54,23 +54,22 @@ app.get('/cat/:numberOfTimes', function (req, res) {
 app.get('/:animal', (req, res) => {
     let animal = req.params.animal;
 
+    switch(animal) {
+        case "cat":
+            res.send('MEOW!! ');
+            break;
+        case "dog":
+            res.send('Woof! ');
+            break;
+        case "pig":
+            res.send('Oink! ');
+            break;
+        default:
+            res.send(`${animal} is not in our zoo!`);
+            break;
+    }
 
-    if(animal == "cat")
-    {    
-        res.send('MEOW!! ');
-    }
-    else if (animal == "dog")
-    {
-        res.send('Woof! ');
-    }
-    else if (animal == "pig")
-    {
-        res.send('Oink! ');
-    }
-    else
-    {
-        res.send(`${animal} is not in our zoo!`);
-    }
+
   })  
   
 
@@ -81,23 +80,21 @@ app.get('/:animal', (req, res) => {
     let response = "";
     let buildString = "";
 
+    switch(animal) {
+        case "cat":
+            response = 'MEOW!! ';
+            break;
+        case "dog":
+            response = 'Woof! ';
+            break;
+        case "pig":
+            response = 'Oink! ';
+            break;
+        default:
+            res.send(`${animal} is not in our zoo!`);
+            break;
+    }
 
-    if(animal == "cat")
-    {    
-        response ='MEOW!! ';
-    }
-    else if (animal == "dog")
-    {
-        response ='Woof! ';
-    }
-    else if (animal == "pig")
-    {
-        response ='Oink! ';
-    }
-    else
-    {
-        res.send(`${animal} is not in our zoo!`);
-    }
 
     for(let i = 0; i < numTimes; i++)
     {
