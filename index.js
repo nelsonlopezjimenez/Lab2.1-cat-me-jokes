@@ -1,4 +1,6 @@
-// YOUR NAME HERE AND MAYBE DATE AND VERSION!!!!
+// Tung Nguyen
+// 01/25/2022
+// v.1.0
 
 const express = require('express')
 const app = express()
@@ -29,11 +31,11 @@ const todoModel = mongoose.model("Todo", todoSchema);
 // Routes
 
 app.get('/', function (req, res) {
-    res.send('Hello World')
+    return res.send('Hello World');
 })
 
 app.get('/cat', function (req, res) {
-    res.send("WOOF, WOOF!!")
+    return res.send("MEOW!!!");
 })
 
 // Using Parameters in the URL argument
@@ -47,18 +49,21 @@ app.get('/cat/:numberOfTimes', function (req, res) {
     for (i = 0; i < numberOfTimes; i++) {
         buildString += "MEOW "
     }
-    res.send(buildString);
+    return res.send(buildString);
 });
 
 // Route to pass a param with the req object
 
 app.get('/:animal', function (req, res) {
-    let buildString = "";
-    if (req.params.animal == "dog") {
-        buildString += "MEOW "
-        res.send(buildString);
-    } else {
-        res.send("The animal is not in our zoo!!")
+    let animal = (String(req.params.animal) || "invalid-animal");
+
+    switch (animal){
+        case "dog":
+            return res.send("WOOF!!!");
+        case "pig":
+            return res.send("OINK!!!");
+        default:
+            return res.send("The animal is not in our zoo!!!");
     }
 })
 
@@ -66,23 +71,17 @@ app.get('/:animal', function (req, res) {
 // Route looks like /pig/20 : output 20 "OINK "
 
 app.get('/:animal/:numberOfTimes', function (req, res) {
-    let buildString = "";
+    let animal          = (String(req.params.animal) || "invalid-animal"),
+        numberOfTimes   = (parseInt(req.params.numberOfTimes) || 0);
 
-    // Add the params from the req object: syntax - req.params.animal
-    //                                     syntax - req.params.numberOfTimes
-    // let animal  = req.params.animal;
-    // let numberOfTimes = req.params.numberOfTimes 
-    // if or switch statement to consider possible values of animal:cat, dog, pig
-    // if ( what condition?    ) {
-    //     // for loop to iterate how many times the animal sound is repeated
-
-    //     for (i = 0; i < numberOfTimes ; i++) {
-    //         buildString += "MEOW "
-    //     }
-    //     res.send(buildString);
-    // } else {
-    //     res.send(`The ${animal} is not in our zoo`)
-    // }
+    switch (animal){
+        case "dog":
+            return res.send("WOOF ".repeat(numberOfTimes));
+        case "pig":
+            return res.send("OINK ".repeat(numberOfTimes));
+        default:
+            return res.send("The animal is not in our zoo!!!");
+    }
 })
 
 app.listen(4444)
