@@ -71,7 +71,7 @@ app.get('/:animal', function (req, res) {
 // Route looks like /pig/20 : output 20 "OINK "
 
 app.get('/:animal/:numberOfTimes', function (req, res) {
-    let animal          = (String(req.params.animal) || "invalid-animal"),
+    let animal          = String(req.params.animal),
         numberOfTimes   = (parseInt(req.params.numberOfTimes) || 0);
 
     switch (animal){
@@ -80,7 +80,7 @@ app.get('/:animal/:numberOfTimes', function (req, res) {
         case "pig":
             return res.send("OINK ".repeat(numberOfTimes));
         default:
-            return res.send("The animal is not in our zoo!!!");
+            return res.send(`"${animal}" is not in our zoo!!!`);
     }
 })
 
