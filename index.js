@@ -1,90 +1,60 @@
-// YOUR NAME HERE AND MAYBE DATE AND VERSION!!!!
 
 const express = require('express')
+const res = require('express/lib/response')
 const app = express()
-const mongoose = require('mongoose');
+const port = 4444
 
-// Built-In Middleware
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static('/public'));
-app.set('view engine', 'ejs');
 
-// Database Server MongoDb Setup
+app.get('/cat', (req, res) => {
+    res.send('MEOW'); 
 
-mongoose.connect('mongodb://localhost/colt-wieruch-todo-list',
-    { useNewUrlParser: true });
-// Setup the Model
-const todoSchema = new mongoose.Schema({
-    title: String,
-    isChecked: { type: Boolean, default: false },
-    date: { type: Date, default: new Date() }
 });
 
-const todoModel = mongoose.model("Todo", todoSchema);
-
-// Custom Middleware
-
-// Routes
-
-app.get('/', function (req, res) {
-    res.send('Hello World')
-})
-
-app.get('/cat', function (req, res) {
-    res.send("WOOF, WOOF!!")
-})
-
-// Using Parameters in the URL argument
-
-// Route /cat/10 to show the animal sound 10 times
-
-app.get('/cat/:numberOfTimes', function (req, res) {
-    let buildString = "";
-    let numberOfTimes = req.params.numberOfTimes
-
-    for (i = 0; i < numberOfTimes; i++) {
-        buildString += "MEOW "
+app.get('/:animal/', (req, res) => {
+    let animal = req.params.animal;
+    
+    if(animal == "dog"){
+       res.send("WOOF"); 
+    }else if(animal == 'cat'){
+       res.send("MEOW");
+    }else if(animal == 'pig'){
+       res.send("OINK");   
+    }else if(animal == 'cow'){
+       res.send("MOOO");
+    }else{
+        res.send("animal not in zoo"); 
     }
-    res.send(buildString);
 });
 
-// Route to pass a param with the req object
+app.get('/:animal/:number',(req,res) => {
+    let animal = req.params.animal; 
+    let number = req.params.number; 
+    let sound; 
 
-app.get('/:animal', function (req, res) {
-    let buildString = "";
-    if (req.params.animal == "dog") {
-        buildString += "MEOW "
-        res.send(buildString);
-    } else {
-        res.send("The animal is not in our zoo!!")
+    if(animal == "dog"){
+       sound = "WOOF"; 
+    }else if(animal == 'cat'){
+       sound = "MEOW";
+    }else if(animal == 'pig'){
+       sound = "OINK";   
+    }else if(animal == 'cow'){
+       sound = "MOOO";
+    }else{
+        sound = ("animal not in zoo"); 
     }
+
+    let result = ""; 
+    for( i = 0; i < number; i++){
+        result = result + sound + " " ; 
+    }
+    res.send(result); 
+
+}); 
+
+app.listen(port, () => {
+  console.log(`We are live on Port:${port}`)
 })
-
-// * TODO week2 topic 1 PLEASE COMPLETE!!!!*
-// Route looks like /pig/20 : output 20 "OINK "
-
-app.get('/:animal/:numberOfTimes', function (req, res) {
-    let buildString = "";
-
-    // Add the params from the req object: syntax - req.params.animal
-    //                                     syntax - req.params.numberOfTimes
-    // let animal  = req.params.animal;
-    // let numberOfTimes = req.params.numberOfTimes 
-    // if or switch statement to consider possible values of animal:cat, dog, pig
-    // if ( what condition?    ) {
-    //     // for loop to iterate how many times the animal sound is repeated
-
-    //     for (i = 0; i < numberOfTimes ; i++) {
-    //         buildString += "MEOW "
-    //     }
-    //     res.send(buildString);
-    // } else {
-    //     res.send(`The ${animal} is not in our zoo`)
-    // }
-})
-
-app.listen(4444)
-
-// Database Seeding
