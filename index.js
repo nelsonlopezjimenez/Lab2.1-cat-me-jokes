@@ -1,4 +1,4 @@
-// YOUR NAME HERE AND MAYBE DATE AND VERSION!!!!
+// Elizabeth Hopper 1/24/22 version 2.0
 
 const express = require('express')
 const app = express()
@@ -24,66 +24,58 @@ const todoSchema = new mongoose.Schema({
 
 const todoModel = mongoose.model("Todo", todoSchema);
 
-// Custom Middleware
+// variables to be used in multiple routes
+const pigSound = "OINK ";
+const cowSound = "MOO ";
+const dogSound = "WOOF ";
+const catSound = "MEOW ";
+const frogSound = "RIBBIT "
 
-// Routes
-
-app.get('/', function (req, res) {
-    res.send('Hello World')
-})
-
-app.get('/cat', function (req, res) {
-    res.send("WOOF, WOOF!!")
-})
-
-// Using Parameters in the URL argument
-
-// Route /cat/10 to show the animal sound 10 times
-
-app.get('/cat/:numberOfTimes', function (req, res) {
-    let buildString = "";
-    let numberOfTimes = req.params.numberOfTimes
-
-    for (i = 0; i < numberOfTimes; i++) {
-        buildString += "MEOW "
-    }
-    res.send(buildString);
-});
-
-// Route to pass a param with the req object
+// route to pass param with the req object
 
 app.get('/:animal', function (req, res) {
-    let buildString = "";
-    if (req.params.animal == "dog") {
-        buildString += "MEOW "
-        res.send(buildString);
+    let animalType = req.params.animal;
+    if (animalType == "dog") {
+        res.send(dogSound);
+    } else if (animalType == "cat") {
+        res.send(catSound);
+    } else if (animalType == "pig") {
+        res.send(pigSound);
+    } else if (animalType == "cow") {
+        res.send(cowSound);
+    } else if (animalType == "frog") {
+        res.send(frogSound);
     } else {
-        res.send("The animal is not in our zoo!!")
+        res.send(animalType + " is not in our zoo!!")
     }
 })
-
-// * TODO week2 topic 1 PLEASE COMPLETE!!!!*
-// Route looks like /pig/20 : output 20 "OINK "
+// Route to repeat animal sounds requested number of times
 
 app.get('/:animal/:numberOfTimes', function (req, res) {
-    let buildString = "";
+    let sound = "";
+    let repeatedSound = "";
+    let animalType = req.params.animal;
+    let toRepeat = req.params.numberOfTimes;
+    if (animalType == "dog") {
+       sound += dogSound;
+    } else if (animalType == "cat") {
+       sound += catSound;
+    } else if (animalType == "pig") {
+       sound += pigSound;
+    } else if (animalType == "cow") {
+       sound += cowSound;
+    } else if (animalType == "frog") {
+       sound += frogSound;
+    } else {
+       res.send(animalType + " is not in our zoo!!")
+    }
+    for (i = 0; i < toRepeat; i++) {
+      repeatedSound += sound + " ";
+    }
+    res.send(repeatedSound);
 
-    // Add the params from the req object: syntax - req.params.animal
-    //                                     syntax - req.params.numberOfTimes
-    // let animal  = req.params.animal;
-    // let numberOfTimes = req.params.numberOfTimes 
-    // if or switch statement to consider possible values of animal:cat, dog, pig
-    // if ( what condition?    ) {
-    //     // for loop to iterate how many times the animal sound is repeated
-
-    //     for (i = 0; i < numberOfTimes ; i++) {
-    //         buildString += "MEOW "
-    //     }
-    //     res.send(buildString);
-    // } else {
-    //     res.send(`The ${animal} is not in our zoo`)
-    // }
 })
+
 
 app.listen(4444)
 
